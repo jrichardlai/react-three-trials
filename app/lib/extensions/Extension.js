@@ -48,8 +48,8 @@ const create = ({extensionName, requiredParams = {}, exports = {}, optionalParam
       // it will allow accessing in the Extended Component with this.props[ExtensionName]
       getExtensionProps() {
         return {
-          [extensionName]: Object.assign({variables: this.getExportedVariables()}, this.getExportedMethods())
-        }
+          [extensionName]: Object.assign({variables: this.getExportedVariables()}, this.getExportedMethods()),
+        };
       }
 
       getExportedVariables() {
@@ -62,8 +62,6 @@ const create = ({extensionName, requiredParams = {}, exports = {}, optionalParam
       getExportedMethods() {
         var _methods = {};
         (exports.methods || []).forEach((methodName) => _methods[methodName] = this[methodName]);
-
-        console.log('exportedMethods', _methods);
 
         return _methods;
       }
