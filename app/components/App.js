@@ -14,6 +14,9 @@ class App extends React.Component {
       cubeRotationX: 0.0,
       cubeRotationY: 0.0,
       cubeRotationZ: 0.0,
+      cubeScaleX: 0,
+      cubeScaleY: 0,
+      cubeScaleZ: 0,
     };
   }
 
@@ -22,34 +25,38 @@ class App extends React.Component {
   }
 
   animate(time) {
+    var dtime	= Date.now() - time;
+
     this.setState({
       cubeRotationX: this.state.cubeRotationX + 0.02,
       cubeRotationY: this.state.cubeRotationY + 0.0125,
       cubeRotationZ: this.state.cubeRotationZ + 0.015,
+      cubeScaleX: 1.0 + 0.3*Math.sin(dtime/300),
+      cubeScaleY: 1.0 + 0.3*Math.sin(dtime/300),
+      cubeScaleZ: 1.0 + 0.3*Math.sin(dtime/300),
     });
 
-// cube.rotation.x += 0.02;
-//
-// cube.rotation.x += 0.02;
-// 	cube.rotation.y += 0.0225;
-// 	cube.rotation.z += 0.0175;
-//
-// 	var dtime	= Date.now() - time;
-// 	cube.scale.x	= 1.0 + 0.3*Math.sin(dtime/300);
-// 	cube.scale.y	= 1.0 + 0.3*Math.sin(dtime/300);
-// 	cube.scale.z	= 1.0 + 0.3*Math.sin(dtime/300);
     this.props['TimerExtension'].requestAnimationFrame(this.animate);
   }
 
   getCubeQuaternion() {
-    var quaternion = new THREE.Quaternion();
-    quaternion.setFromAxisAngle(new THREE.Vector3(
-      this.state.cubeRotationX,
-      this.state.cubeRotationY,
-      this.state.cubeRotationZ,
-    ), Math.PI / 2 );
+    return new THREE.Quaternion().
+                     setFromEuler(
+                       new THREE.Euler(
+                         this.state.cubeRotationX,
+                         this.state.cubeRotationY,
+                         this.state.cubeRotationZ,
+                         'XYZ'
+                       )
+                     );
+  }
 
-    return quaternion;
+  getCubeScale() {
+    return new THREE.Vector3(
+      this.state.cubeScaleX,
+      this.state.cubeScaleY,
+      this.state.cubeScaleZ
+    );
   }
 
   render() {
@@ -64,6 +71,7 @@ class App extends React.Component {
           material={new THREE.MeshNormalMaterial()}
           position={new THREE.Vector3(0, 150, 0)}
           quaternion={this.getCubeQuaternion()}
+          scale={this.getCubeScale()}
           ref='cube'
         />
         <ReactTHREE.PerspectiveCamera
