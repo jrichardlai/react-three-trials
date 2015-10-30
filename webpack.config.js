@@ -51,7 +51,7 @@ var common = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlwebpackPlugin({
-      title: 'InstaGalleria',
+      title: 'React Three Trials',
     }),
   ],
 };
