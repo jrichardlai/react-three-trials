@@ -1,6 +1,5 @@
 import React     from 'react';
 import invariant from 'invariant';
-import _         from 'underscore';
 
 const create = ({extensionName, requiredParams = {}, exports = {}, optionalParams, ...BaseLib}) => {
   invariant(
@@ -13,12 +12,12 @@ const create = ({extensionName, requiredParams = {}, exports = {}, optionalParam
     const componentName = Component.displayName || Component.name;
     const containerName = `${extensionName} (${componentName})`;
 
-    _.pairs(requiredParams).forEach(([key, text]) => {
+    for (let key in requiredParams)  {
       invariant(
         params[key],
-        `Extension params required ${containerName} ${key}: ${text}`
+        `Extension params required ${containerName} ${key}: ${requiredParams[key]}`
       );
-    });
+    }
 
     class ComponentContainer extends React.Component {
       displayName: containerName
@@ -44,11 +43,15 @@ const create = ({extensionName, requiredParams = {}, exports = {}, optionalParam
         return this.refs._ExtensionComponent;
       }
 
+      bindOriginalComponent(func, ...args) {
+        return func.bind(this.getOriginalComponent(), ...args);
+      }
+
       // Implement getExtensionProps if you want to add more behavior passed to the Component
       // it will allow accessing in the Extended Component with this.props[ExtensionName]
       getExtensionProps() {
         return {
-          [extensionName]: Object.assign({variables: this.getExportedVariables()}, this.getExportedMethods()),
+          [extensionName]: Object.assign(this.getExportedVariables(), this.getExportedMethods()),
         };
       }
 
