@@ -8,9 +8,9 @@ const FirstPersonControls = require('three-first-person-controls')(THREE);
 
 @TimerExtension
 class ControlledCubeRotation extends React.Component {
-  static contextTypes = {
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
+  static propTypes = {
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
   }
 
   constructor(props) {
@@ -37,7 +37,7 @@ class ControlledCubeRotation extends React.Component {
   }
 
   componentDidMount() {
-    this.camControls = new THREE.FirstPersonControls(this.refs.maincamera);
+    this.camControls = new THREE.FirstPersonControls(this.props.mainCamera);
     this.camControls.lookSpeed = 0.4;
     this.camControls.movementSpeed = 50;
     this.camControls.noFly = true;
@@ -91,29 +91,14 @@ class ControlledCubeRotation extends React.Component {
 
   render() {
     return (
-      <ReactTHREE.Scene
-        width={this.context.width}
-        height={this.context.height}
-        camera={'maincamera'}
-      >
-        <ReactTHREE.Mesh
-          geometry={new THREE.CubeGeometry( 200, 200, 200 )}
-          material={new THREE.MeshNormalMaterial()}
-          position={new THREE.Vector3(0, 150, 0)}
-          quaternion={this.getCubeQuaternion()}
-          scale={this.getCubeScale()}
-          ref='cube'
-        />
-        <ReactTHREE.PerspectiveCamera
-          name='maincamera'
-          ref='maincamera'
-          fov='70'
-          aspect={this.context.width/this.context.height}
-          far={5000}
-          position={new THREE.Vector3(0,0,600)}
-          lookat={new THREE.Vector3(0,0,0)}
-        />
-      </ReactTHREE.Scene>
+      <ReactTHREE.Mesh
+        geometry={new THREE.CubeGeometry( 200, 200, 200 )}
+        material={new THREE.MeshNormalMaterial()}
+        position={new THREE.Vector3(0, 150, 0)}
+        quaternion={this.getCubeQuaternion()}
+        scale={this.getCubeScale()}
+        ref='cube'
+      />
     );
   }
 }

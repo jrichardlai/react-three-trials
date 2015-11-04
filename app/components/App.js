@@ -1,11 +1,13 @@
-import React from 'react';
+import React      from 'react';
+import ReactTHREE from 'react-three';
+import THREE      from 'three';
 
 import ControlledCubeRotation from './examples/ControlledCubeRotation';
 import CubeRotation           from './examples/CubeRotation';
 
 const styles = {
   menu: {
-    'background-color': 'white',
+    'backgroundColor': 'white',
   },
   menuLink: {
     'padding': '5px',
@@ -14,11 +16,6 @@ const styles = {
 };
 
 class App extends React.Component {
-  static childContextTypes = {
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-  }
-
   constructor(props) {
     super(props);
 
@@ -27,19 +24,20 @@ class App extends React.Component {
     };
   }
 
-  getChildContext() {
+  getChildProps() {
     return {
       width: this.props.width,
       height: this.props.height,
+      mainCamera: this.refs.mainCamera,
     };
   }
 
-  getSelectedExample() {
+  renderSelectedExample() {
     switch (this.state.selectedApp) {
       case 'cubeRotation':
-        return <CubeRotation />;
+        return <CubeRotation {...this.getChildProps()} />;
       case 'controlledCubeRotation':
-        return <ControlledCubeRotation />;
+        return <ControlledCubeRotation {...this.getChildProps()} />;
     }
 
     return null;
@@ -64,11 +62,32 @@ class App extends React.Component {
     )
   }
 
+  renderScene() {
+    return (
+      <ReactTHREE.Scene
+        width={this.props.width}
+        height={this.props.height}
+        camera='mainCamera'
+      >
+        {this.renderSelectedExample()}
+        <ReactTHREE.PerspectiveCamera
+          name='mainCamera'
+          ref='mainCamera'
+          fov='70'
+          aspect={this.props.width/this.props.height}
+          far={5000}
+          position={new THREE.Vector3(0,0,600)}
+          lookat={new THREE.Vector3(0,0,0)}
+        />
+      </ReactTHREE.Scene>
+    );
+  }
+
   render() {
     return (
       <div>
         {this.renderMenu()}
-        {this.getSelectedExample()}
+        {this.renderScene()}
       </div>
     );
   }

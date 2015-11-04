@@ -5,9 +5,9 @@ import TimerExtension from '../../lib/extensions/TimerExtension';
 
 @TimerExtension
 class CubeRotation extends React.Component {
-  static contextTypes = {
-    width: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
+  static propTypes = {
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
   }
 
   constructor(props) {
@@ -66,28 +66,14 @@ class CubeRotation extends React.Component {
 
   render() {
     return (
-      <ReactTHREE.Scene
-        width={this.context.width}
-        height={this.context.height}
-        camera={'maincamera'}
-      >
-        <ReactTHREE.Mesh
-          geometry={new THREE.CubeGeometry( 200, 200, 200 )}
-          material={new THREE.MeshNormalMaterial()}
-          position={new THREE.Vector3(0, 150, 0)}
-          quaternion={this.getCubeQuaternion()}
-          scale={this.getCubeScale()}
-          ref='cube'
-        />
-        <ReactTHREE.PerspectiveCamera
-          name='maincamera'
-          fov='70'
-          aspect={this.context.width/this.context.height}
-          far={5000}
-          position={new THREE.Vector3(0,0,600)}
-          lookat={new THREE.Vector3(0,0,0)}
-        />
-      </ReactTHREE.Scene>
+      <ReactTHREE.Mesh
+        geometry={new THREE.CubeGeometry( 200, 200, 200 )}
+        material={new THREE.MeshNormalMaterial()}
+        position={new THREE.Vector3(0, 150, 0)}
+        quaternion={this.getCubeQuaternion()}
+        scale={this.getCubeScale()}
+        ref='cube'
+      />
     );
   }
 }
