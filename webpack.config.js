@@ -9,7 +9,11 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 var common = {
-  entry: APP_PATH,
+  entry: [
+    'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
+    'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+    APP_PATH
+  ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
@@ -20,13 +24,13 @@ var common = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
+        test: /\.jsx?$/,
+        loaders: ['react-hot', 'babel'],
         include: APP_PATH,
       },
       {
-        test: /\.jsx?$/,
-        loaders: ['babel'],
+        test: /\.css$/,
+        loaders: ['style', 'css'],
         include: APP_PATH,
       },
       {
