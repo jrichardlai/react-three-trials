@@ -69,7 +69,7 @@ class CubeRotation extends React.Component {
       <ReactTHREE.Mesh
         geometry={new THREE.CubeGeometry( 200, 200, 200 )}
         material={new THREE.MeshNormalMaterial()}
-        position={new THREE.Vector3(0, 150, 0)}
+        position={new THREE.Vector3(...this.props.vector3Position)}
         quaternion={this.getCubeQuaternion()}
         scale={this.getCubeScale()}
         ref='cube'

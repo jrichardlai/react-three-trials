@@ -19,7 +19,7 @@ class ControlledCubeRotation extends React.Component {
     this.animate = this.animate.bind(this);
     this.start   = Date.now();
 
-    this.state   = {
+    this.state = {
       cubeRotationX: 0.0,
       cubeRotationY: 0.0,
       cubeRotationZ: 1.0,
@@ -94,7 +94,7 @@ class ControlledCubeRotation extends React.Component {
       <ReactTHREE.Mesh
         geometry={new THREE.CubeGeometry( 200, 200, 200 )}
         material={new THREE.MeshNormalMaterial()}
-        position={new THREE.Vector3(0, 150, 0)}
+        position={new THREE.Vector3(...this.props.vector3Position)}
         quaternion={this.getCubeQuaternion()}
         scale={this.getCubeScale()}
         ref='cube'

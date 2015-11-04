@@ -35,9 +35,19 @@ class App extends React.Component {
   renderSelectedExample() {
     switch (this.state.selectedApp) {
       case 'cubeRotation':
-        return <CubeRotation {...this.getChildProps()} />;
+        return (
+          <CubeRotation
+            {...this.getChildProps()}
+            vector3Position={[0, 150, 0]}
+          />
+        );
       case 'controlledCubeRotation':
-        return <ControlledCubeRotation {...this.getChildProps()} />;
+        return (
+          <ControlledCubeRotation
+            {...this.getChildProps()}
+            vector3Position={[0, 150, 0]}
+          />
+        );
     }
 
     return null;
