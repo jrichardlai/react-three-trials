@@ -7,11 +7,27 @@ import CubeRotation           from './examples/CubeRotation';
 
 const styles = {
   menu: {
-    'backgroundColor': 'white',
+    backgroundColor: 'white',
   },
-  menuLink: {
-    'padding': '5px',
-    'margin': '5px',
+  menuButton: {
+    padding: 5,
+    margin: 5,
+  },
+  inputsContainer: {
+    position: 'absolute',
+    backgroundColor: 'yellow',
+    padding: 10,
+  },
+  cubeInput: {
+    width: 20,
+    padding: 5,
+  },
+  cubeValues: {
+    marginTop: 5,
+  },
+  cubeValue: {
+    width: 20,
+    padding: 5,
   },
 };
 
@@ -19,8 +35,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleRemoveCubeClick = this.handleRemoveCubeClick.bind(this);
+    this.handleAddCubeClick    = this.handleAddCubeClick.bind(this);
+    this.renderCubeList        = this.renderCubeList.bind(this);
+
     this.state = {
       selectedApp: 'none',
+      cubes: [],
     };
   }
 
@@ -32,21 +53,43 @@ class App extends React.Component {
     };
   }
 
+  handleRemoveCubeClick(index) {
+    var newCubes = new Array(...this.state.cubes);
+    newCubes.splice(index, 1);
+    this.setState({cubes: newCubes});
+  }
+
+  handleAddCubeClick() {
+    const newCube = {
+      x: this.refs.cubeX.value,
+      y: this.refs.cubeY.value,
+      z: this.refs.cubeZ.value,
+    };
+
+    this.setState({
+      cubes: [...this.state.cubes, newCube],
+    });
+  }
+
   renderSelectedExample() {
     switch (this.state.selectedApp) {
       case 'cubeRotation':
         return (
-          <CubeRotation
-            {...this.getChildProps()}
-            vector3Position={[0, 150, 0]}
-          />
+          this.state.cubes.map(({x, y, z}) => (
+            <CubeRotation
+              {...this.getChildProps()}
+              vector3Position={[x, y, z]}
+            />
+          ))
         );
       case 'controlledCubeRotation':
         return (
-          <ControlledCubeRotation
-            {...this.getChildProps()}
-            vector3Position={[0, 150, 0]}
-          />
+          this.state.cubes.map(({x, y, z}) => (
+            <ControlledCubeRotation
+              {...this.getChildProps()}
+              vector3Position={[x, y, z]}
+            />
+          ))
         );
     }
 
@@ -57,19 +100,48 @@ class App extends React.Component {
     return (
       <header style={styles.menu}>
         <button
-          style={styles.menuLink}
+          style={styles.menuButton}
           onClick={() => { this.setState({selectedApp: 'cubeRotation'}) }}
         >
           Cube
         </button>
         <button
-          style={styles.menuLink}
+          style={styles.menuButton}
           onClick={() => { this.setState({selectedApp: 'controlledCubeRotation'}) }}
         >
           Controlled Cube
         </button>
       </header>
     )
+  }
+
+  renderCubeList() {
+    return (
+      <div style={styles.inputsContainer}>
+        <div>
+          <input ref="cubeX" style={styles.cubeInput} />
+          <input ref="cubeY" style={styles.cubeInput} />
+          <input ref="cubeZ" style={styles.cubeInput} />
+          <button
+            onClick={this.handleAddCubeClick}
+          >Add Cube</button>
+        </div>
+        {
+          this.state.cubes.map((cube, index) => (
+            <div style={styles.cubeValues}>
+              <span style={styles.cubeValue}>{cube.x}</span>
+              <span style={styles.cubeValue}>{cube.y}</span>
+              <span style={styles.cubeValue}>{cube.z}</span>
+              <button
+                onClick={() => this.handleRemoveCubeClick(index) }
+              >
+                Remove Cube
+              </button>
+            </div>
+          ))
+        }
+      </div>
+    );
   }
 
   renderScene() {
@@ -86,7 +158,7 @@ class App extends React.Component {
           fov='70'
           aspect={this.props.width/this.props.height}
           far={5000}
-          position={new THREE.Vector3(0,0,600)}
+          position={new THREE.Vector3(0, 0, 600)}
           lookat={new THREE.Vector3(0,0,0)}
         />
       </ReactTHREE.Scene>
@@ -97,6 +169,7 @@ class App extends React.Component {
     return (
       <div>
         {this.renderMenu()}
+        {this.renderCubeList()}
         {this.renderScene()}
       </div>
     );
