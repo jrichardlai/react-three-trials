@@ -11,6 +11,7 @@
   "dependencies": {
     "invariant": "^2.1.1",
     "react": "^0.14.0",
+    "react-component-extension": "0.0.1",
     "react-dom": "^0.14.0",
     "react-three": "^0.7.0",
     "three": "^0.72.0",

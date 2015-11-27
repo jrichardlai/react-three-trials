@@ -12,7 +12,7 @@
 
 'use strict';
 
-import * as Extension from './Extension';
+import * as Extension from 'react-component-extension';
 
 var GLOBAL = typeof window === 'undefined' ? global : window;
 
