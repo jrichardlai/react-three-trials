@@ -97,18 +97,18 @@ class App extends React.Component {
       <header style={styles.menu}>
         <button
           style={styles.menuButton}
-          onClick={() => { this.setState({selectedApp: 'cubeRotation'}) }}
+          onClick={() => { this.setState({selectedApp: 'cubeRotation'}); }}
         >
           Cube
         </button>
         <button
           style={styles.menuButton}
-          onClick={() => { this.setState({selectedApp: 'controlledCubeRotation'}) }}
+          onClick={() => { this.setState({selectedApp: 'controlledCubeRotation'}); }}
         >
           Controlled Cube
         </button>
       </header>
-    )
+    );
   }
 
   renderCubeList = () => {
