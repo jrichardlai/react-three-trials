@@ -36,7 +36,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      selectedApp: 'none',
+      selectedApp: 'cubeRotation',
       cubes: [],
     };
   }
