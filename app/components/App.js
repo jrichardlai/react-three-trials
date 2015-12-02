@@ -35,10 +35,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleRemoveCubeClick = this.handleRemoveCubeClick.bind(this);
-    this.handleAddCubeClick    = this.handleAddCubeClick.bind(this);
-    this.renderCubeList        = this.renderCubeList.bind(this);
-
     this.state = {
       selectedApp: 'none',
       cubes: [],
@@ -53,13 +49,13 @@ class App extends React.Component {
     };
   }
 
-  handleRemoveCubeClick(index) {
+  handleRemoveCubeClick = (index) => {
     var newCubes = new Array(...this.state.cubes);
     newCubes.splice(index, 1);
     this.setState({cubes: newCubes});
   }
 
-  handleAddCubeClick() {
+  handleAddCubeClick = () => {
     const newCube = {
       x: this.refs.cubeX.value,
       y: this.refs.cubeY.value,
@@ -115,7 +111,7 @@ class App extends React.Component {
     )
   }
 
-  renderCubeList() {
+  renderCubeList = () => {
     return (
       <div style={styles.inputsContainer}>
         <div>
