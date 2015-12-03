@@ -13,6 +13,10 @@ const styles = {
     padding: 5,
     margin: 5,
   },
+  selectedMenubutton: {
+    backgroundColor: 'blue',
+    color: 'white',
+  },
   inputsContainer: {
     position: 'absolute',
     backgroundColor: 'yellow',
@@ -67,6 +71,14 @@ class App extends React.Component {
     });
   }
 
+  getSelectedStyle = (app) => {
+    if (app === this.state.selectedApp) {
+      return styles.selectedMenubutton;
+    }
+
+    return {};
+  }
+
   renderSelectedExample() {
     switch (this.state.selectedApp) {
       case 'cubeRotation':
@@ -96,13 +108,13 @@ class App extends React.Component {
     return (
       <header style={styles.menu}>
         <button
-          style={styles.menuButton}
+          style={{...styles.menuButton, ...this.getSelectedStyle('cubeRotation')}}
           onClick={() => { this.setState({selectedApp: 'cubeRotation'}); }}
         >
           Cube
         </button>
         <button
-          style={styles.menuButton}
+          style={{...styles.menuButton, ...this.getSelectedStyle('controlledCubeRotation')}}
           onClick={() => { this.setState({selectedApp: 'controlledCubeRotation'}); }}
         >
           Controlled Cube
