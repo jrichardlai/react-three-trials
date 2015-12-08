@@ -8,17 +8,18 @@ class CubeRotation extends React.Component {
   static propTypes = {
     width: React.PropTypes.number,
     height: React.PropTypes.number,
+    startTime: React.PropTypes.objectOf(Date),
   }
 
   constructor(props) {
     super(props);
 
-    this.animate = this.animate.bind(this);
-    this.start   = Date.now();
-    this.state   = {
-      cubeRotationX: 0.0,
-      cubeRotationY: 0.0,
-      cubeRotationZ: 0.0,
+    const ticks = Date.now() - this.props.startTime;
+
+    this.state = {
+      cubeRotationX: ticks * 0.02,
+      cubeRotationY: ticks * 0.0125,
+      cubeRotationZ: ticks * 0.015,
       cubeScaleX: 0,
       cubeScaleY: 0,
       cubeScaleZ: 0,

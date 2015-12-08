@@ -64,6 +64,7 @@ class App extends React.Component {
       x: this.refs.cubeX.value,
       y: this.refs.cubeY.value,
       z: this.refs.cubeZ.value,
+      startTime: Date.now(),
     };
 
     this.setState({
@@ -83,19 +84,21 @@ class App extends React.Component {
     switch (this.state.selectedApp) {
       case 'cubeRotation':
         return (
-          this.state.cubes.map(({x, y, z}) => (
+          this.state.cubes.map(({x, y, z, startTime}) => (
             <CubeRotation
               {...this.getChildProps()}
               vector3Position={[x, y, z]}
+              startTime={startTime}
             />
           ))
         );
       case 'controlledCubeRotation':
         return (
-          this.state.cubes.map(({x, y, z}) => (
+          this.state.cubes.map(({x, y, z, startTime}) => (
             <ControlledCubeRotation
               {...this.getChildProps()}
               vector3Position={[x, y, z]}
+              startTime={startTime}
             />
           ))
         );
