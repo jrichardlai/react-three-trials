@@ -30,7 +30,7 @@ class CubeRotation extends React.Component {
     this.animate(this.props.startTime);
   }
 
-  animate(time) {
+  animate = (time) => {
     var dtime	= Date.now() - time;
 
     this.setState({

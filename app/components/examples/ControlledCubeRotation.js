@@ -49,7 +49,7 @@ class ControlledCubeRotation extends React.Component {
     this.camControls.lat = 120;
   }
 
-  animate(time) {
+  animate = (time) => {
     var dtime	= Date.now() - time;
 
     this.setState({
