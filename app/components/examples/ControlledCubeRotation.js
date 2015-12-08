@@ -33,7 +33,7 @@ class ControlledCubeRotation extends React.Component {
   }
 
   componentWillMount() {
-    this.animate();
+    this.animate(this.props.startTime);
   }
 
   componentDidMount() {

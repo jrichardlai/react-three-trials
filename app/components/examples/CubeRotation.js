@@ -27,7 +27,7 @@ class CubeRotation extends React.Component {
   }
 
   componentWillMount() {
-    this.animate(this.start);
+    this.animate(this.props.startTime);
   }
 
   animate(time) {
