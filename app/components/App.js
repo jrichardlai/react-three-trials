@@ -14,20 +14,22 @@ const styles = {
     margin: 5,
   },
   selectedMenubutton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#68B0AB',
     color: 'white',
   },
   inputsContainer: {
     position: 'absolute',
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
     padding: 10,
   },
-  cubeInput: {
-    width: 20,
-    padding: 5,
+  addedInputsContainer: {
+    'margin-top': 5,
   },
-  cubeValues: {
-    marginTop: 5,
+  cubeInput: {
+    width: 50,
+    'margin-right': 5,
+    'text-align': 'center',
+    padding: 5,
   },
   cubeValue: {
     width: 20,
@@ -112,12 +114,14 @@ class App extends React.Component {
       <header style={styles.menu}>
         <button
           style={{...styles.menuButton, ...this.getSelectedStyle('cubeRotation')}}
+          className='btn btn-default'
           onClick={() => { this.setState({selectedApp: 'cubeRotation'}); }}
         >
           Cube
         </button>
         <button
           style={{...styles.menuButton, ...this.getSelectedStyle('controlledCubeRotation')}}
+          className='btn btn-default'
           onClick={() => { this.setState({selectedApp: 'controlledCubeRotation'}); }}
         >
           Controlled Cube
@@ -129,25 +133,31 @@ class App extends React.Component {
   renderCubeList = () => {
     return (
       <div style={styles.inputsContainer}>
-        <div>
-          <input ref="cubeX" style={styles.cubeInput} />
-          <input ref="cubeY" style={styles.cubeInput} />
-          <input ref="cubeZ" style={styles.cubeInput} />
-          <button
-            onClick={this.handleAddCubeClick}
-          >Add Cube</button>
+        <div className='form-inline'>
+          <div className='form-group'>
+            <input ref="cubeX" style={styles.cubeInput} className='form-control' />
+            <input ref="cubeY" style={styles.cubeInput} className='form-control' />
+            <input ref="cubeZ" style={styles.cubeInput} className='form-control' />
+            <button
+              onClick={this.handleAddCubeClick}
+              className='btn btn-default'
+            >Add Cube</button>
+          </div>
         </div>
         {
           this.state.cubes.map((cube, index) => (
-            <div style={styles.cubeValues}>
-              <span style={styles.cubeValue}>{cube.x}</span>
-              <span style={styles.cubeValue}>{cube.y}</span>
-              <span style={styles.cubeValue}>{cube.z}</span>
-              <button
-                onClick={() => this.handleRemoveCubeClick(index) }
-              >
-                Remove Cube
-              </button>
+            <div style={styles.addedInputsContainer} className='form-inline'>
+              <div className='form-group'>
+                <input style={styles.cubeInput} className='form-control' disabled value={cube.x} />
+                <input style={styles.cubeInput} className='form-control' disabled value={cube.y} />
+                <input style={styles.cubeInput} className='form-control' disabled value={cube.z} />
+                <button
+                  onClick={() => this.handleRemoveCubeClick(index) }
+                  className='btn btn-default'
+                >
+                  Remove Cube
+                </button>
+              </div>
             </div>
           ))
         }
