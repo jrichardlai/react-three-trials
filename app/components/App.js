@@ -21,15 +21,19 @@ const styles = {
     position: 'absolute',
     backgroundColor: 'white',
     padding: 10,
+    height: '100%',
+    'overflow-y': 'scroll',
+    width: 250,
   },
   addedInputsContainer: {
     'margin-top': 5,
   },
   cubeInput: {
-    width: 50,
+    width: 40,
     'margin-right': 5,
     'text-align': 'center',
     padding: 5,
+    display: 'inline-block',
   },
   cubeValue: {
     width: 20,
@@ -133,7 +137,7 @@ class App extends React.Component {
   renderCubeList = () => {
     return (
       <div style={styles.inputsContainer}>
-        <div className='form-inline'>
+        <div className='form-inline' style={styles.addedInputsContainer}>
           <div className='form-group'>
             <input ref="cubeX" style={styles.cubeInput} className='form-control' />
             <input ref="cubeY" style={styles.cubeInput} className='form-control' />
@@ -155,7 +159,7 @@ class App extends React.Component {
                   onClick={() => this.handleRemoveCubeClick(index) }
                   className='btn btn-default'
                 >
-                  Remove Cube
+                  Remove
                 </button>
               </div>
             </div>
